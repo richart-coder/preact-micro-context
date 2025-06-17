@@ -67,12 +67,12 @@ function Counter() {
 
 ## API 參考
 
-### `createContext(name?, defaultValue?)`
+### `createContext(defaultValue?)`
 
 與原生 Preact `createContext` 相同但經過優化。
 
 ```javascript
-const MyContext = createContext("MyContext", defaultValue);
+const MyContext = createContext(defaultValue);
 ```
 
 ### `useContext(context, selector?)`
