@@ -27,14 +27,12 @@ export const createContext = (initValue) => {
    * @returns {React.ReactElement} 渲染的子組件
    */
   const Provider = ({ value, children }) => {
-    useEffect(() => {
-      ctxCache.set(ctx, value);
-    }, [value]);
-
+    ctxCache.set(ctx, value);
     return <>{children}</>;
   };
   ctx.Provider = memo(Provider, (prevProps, nextProps) => {
     if (prevProps.value !== nextProps.value) {
+      ctxCache.set(ctx, nextProps.value);
       eventBus.emit(eventName, nextProps.value);
     }
     return true;
