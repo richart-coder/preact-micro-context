@@ -27,7 +27,10 @@ export const createContext = (initValue) => {
    * @returns {React.ReactElement} 渲染的子組件
    */
   const Provider = ({ value, children }) => {
-    ctxCache.set(ctx, value);
+    useEffect(() => {
+      ctxCache.set(ctx, value);
+    }, [value]);
+
     return <>{children}</>;
   };
   ctx.Provider = memo(Provider, (prevProps, nextProps) => {
@@ -52,14 +55,12 @@ export const createContext = (initValue) => {
  * - 可大幅提升應用性能，避免不必要的重新渲染
  */
 export const useContext = (context, selector) => {
-  const ctx = ctxCache.get(context);
-  const eventName = context[EVENT_NAME];
-
   const [state, setState] = useState(() => {
+    const ctx = ctxCache.get(context);
     if (!selector) return ctx;
     return selector(ctx);
   });
-
+  const eventName = context[EVENT_NAME];
   useEffect(() => {
     const subscriber = (nextCtx) => {
       setState(() => (selector ? selector(nextCtx) : nextCtx));
