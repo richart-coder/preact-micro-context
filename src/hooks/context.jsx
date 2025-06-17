@@ -60,8 +60,9 @@ export const useContext = (context, selector) => {
     if (!selector) return ctx;
     return selector(ctx);
   });
-  const eventName = context[EVENT_NAME];
+
   useEffect(() => {
+    const eventName = context[EVENT_NAME];
     const subscriber = (nextCtx) => {
       setState(() => (selector ? selector(nextCtx) : nextCtx));
     };
