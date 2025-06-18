@@ -8,7 +8,7 @@ import {
 import EventBus from "../utils/EventBus";
 const eventBus = new EventBus();
 const EVENT_NAME = Symbol("event-name");
-const SCOPED_CONTEXT = Symbol("scope-context");
+const SCOPED_CONTEXT = Symbol("scoped-context");
 
 let contextCounter = 0;
 
