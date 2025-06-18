@@ -8,17 +8,17 @@ import {
 import EventBus from "../utils/EventBus";
 const eventBus = new EventBus();
 const EVENT_NAME = Symbol("event-name");
-const SCOPE_CONTEXT = Symbol("scope-context");
+const SCOPED_CONTEXT = Symbol("scope-context");
 
 let contextCounter = 0;
 
 export const createContext = (initValue) => {
   const eventName = `context-${++contextCounter}`;
-  const ScopeContext = preactCreateContext(initValue);
+  const ScopedContext = preactCreateContext(initValue);
 
   const Provider = ({ value, children }) => {
     return (
-      <ScopeContext.Provider value={value}>{children}</ScopeContext.Provider>
+      <ScopedContext.Provider value={value}>{children}</ScopedContext.Provider>
     );
   };
 
@@ -30,13 +30,13 @@ export const createContext = (initValue) => {
       return true;
     }),
     [EVENT_NAME]: eventName,
-    [SCOPE_CONTEXT]: ScopeContext,
+    [SCOPED_CONTEXT]: ScopedContext,
   };
   return context;
 };
 
 export const useContext = (context, selector) => {
-  const ctx = preactUseContext(context[SCOPE_CONTEXT]);
+  const ctx = preactUseContext(context[SCOPED_CONTEXT]);
   const [state, setState] = useState(() => {
     return selector ? selector(ctx) : ctx;
   });
