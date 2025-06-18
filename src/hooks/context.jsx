@@ -27,7 +27,9 @@ export const createContext = (initValue) => {
    * @returns {React.ReactElement} 渲染的子組件
    */
   const Provider = ({ value, children }) => {
-    ctxCache.set(ctx, value);
+    if (value !== undefined) {
+      ctxCache.set(ctx, value);
+    }
     return <>{children}</>;
   };
   ctx.Provider = memo(Provider, (prevProps, nextProps) => {
