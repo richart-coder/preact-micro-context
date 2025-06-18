@@ -1,5 +1,3 @@
 const App = () => {
-  return <h1 className="app">Hello Micro Context!</h1>;
+  return <div className="app">Hello Micro Context!</div>;
 };
-
-export default App;
