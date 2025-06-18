@@ -16,12 +16,15 @@ export const createContext = (initValue) => {
   const eventName = `context-${++contextCounter}`;
   const ScopedContext = preactCreateContext(initValue);
 
-  const Provider = ({ value, children }) => {
+  const Provider = ({
+    value,
+    children = <b>⚠️ {Provider.displayName} 缺少 children</b>,
+  }) => {
     return (
       <ScopedContext.Provider value={value}>{children}</ScopedContext.Provider>
     );
   };
-
+  Provider.displayName = "Context.Provider";
   const context = {
     Provider: memo(Provider, (prevProps, nextProps) => {
       if (prevProps.value !== nextProps.value) {
