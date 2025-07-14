@@ -1,24 +1,26 @@
 class EventBus {
   constructor() {
-    this.events = {};
+    this.eventHandlers = new Map();
   }
 
-  on(event, callback) {
-    if (!this.events[event]) {
-      this.events[event] = [];
+  on(eventType, targetHandler) {
+    if (!this.eventHandlers.has(eventType)) {
+      this.eventHandlers.set(eventType, new Set());
     }
-    this.events[event].push(callback);
+    this.eventHandlers.get(eventType).add(targetHandler);
   }
 
-  emit(event, data) {
-    if (this.events[event]) {
-      this.events[event].forEach((callback) => callback(data));
+  emit(eventType, data) {
+    const handlers = this.eventHandlers.get(eventType);
+    if (handlers) {
+      handlers.forEach((handler) => handler(data));
     }
   }
 
-  off(event, callback) {
-    if (this.events[event]) {
-      this.events[event] = this.events[event].filter((cb) => cb !== callback);
+  off(eventType, targetHandler) {
+    const handlers = this.eventHandlers.get(eventType);
+    if (handlers) {
+      handlers.delete(targetHandler);
     }
   }
 }
