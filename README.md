@@ -89,7 +89,7 @@ const userName = useContext(MyContext, (state) => state.user.name);
 // 取得計算值
 const completedCount = useContext(
   TodoContext,
-  (state) => state.todos.filter((todo) => todo.completed).length
+  (state) => state.todos.filter((todo) => todo.completed).length,
 );
 ```
 
